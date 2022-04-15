@@ -8,6 +8,7 @@ Para execução do projeto, deve-se instalar as dependências listadas em requir
 1. **DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_SCHEMA** - Conexão com o banco de dados, sendo respectivamente: usuário, senha, endereço IP do host, porta do host, esquema usado para o projeto.
 2. **STAGE** - Definição do ambiente de execução entre Local, Teste, Desenvolvimento ou Produção, respectivamente associados aos valores: Local, Test, Development, Production.
 3. **MAIL_USER, MAIL_PASSWORD, NOTIFICATION_EMAIL** - Dados para envio de e-mail de alerta, via SMTP, sendo respectivamente: e-mail de login e sua senha para o servidor SMTP utilziado, e o e-mail para o qual a notificação será enviada.
+4. **LOGS_FOLDER** - Caminho para o diretório onde serão gerados os arquivos de Log. 
 
 Deve-se ter um serviço de banco de dados MySQL ativo, o que pode ser feito utilizando o container:
 
@@ -33,4 +34,13 @@ O projeto possui uma funcionalidade de **Scheduler**, a qual irá executar Jobs 
 
 2. **MissingDaysMonitoringScheduler**: Executado diariamente, com o objetivo de verificar se há algum registro de MMS faltante no banco, para os últimos 365 dias. Caso haja, então será enviado um e-mail de alerta informando os dias faltantes, o que será feito através do módulo para envios de e-mail via SMTP. 
  
-O serviço SMTP foi configurado no script **mail**, com base em um servidor Gmail. Para que o mesmo funcione, as variáveis de ambiente **MAIL_USER** e **MAIL_PASSWORD** devem ser preenchidas com o login de uma conta Gmail, com a opção de **Acesso a apps menos seguras** habilitada (ou Navegação segura desabilitada). Além disso, deve ser fornecido o e-mail de destino das notificações, para a variável **NOTIFICATION_EMAIL**.
+* O serviço SMTP foi configurado no script **mail**, com base em um servidor Gmail. Para que o mesmo funcione, as variáveis de ambiente **MAIL_USER** e **MAIL_PASSWORD** devem ser preenchidas com o login de uma conta Gmail, com a opção de **Acesso a apps menos seguras** habilitada (ou Navegação segura desabilitada). Além disso, deve ser fornecido o e-mail de destino das notificações, para a variável **NOTIFICATION_EMAIL**.
+
+Foi implementado um módulo para geração de **Logs**, o qual é usado tanto para os Schedulers quanto para a aplicação de modo que São gerados arquivos de Log separados para cada um. No caso dos Schedulers, são gravados possíveis erros na execução diária dos mesmos, além de informações da execução com sucesso. De forma semelhante, para a aplicação são gravados os erros que podem ocorrer no acesso a endpoints, assim como dados de requisições para os mesmos.
+
+Foram implementados testes unitários para os principais métodos, contidos no diretório de **tests**, os quais foram separados por móodulos e arquivos. Para execução dos mesmos, basta usar o comando **pytest** nesse diretório, já tendo as variáveis de ambiente definidas:
+
+1. STAGE: Test
+2. LOGS_FOLDER: Caminho para o diretório raíz do projeto.
+3. As variáveis referente ao serviço de e-mail não são utilzadas no teste, então não precisam ser definidas nesse ambiente. Já para conexão de banco, é definida, na classe de teste, uma conexão com uma base SQLite simples que será gerada para os testes, não havendo necessidade das variáveis de ambiente.
+
