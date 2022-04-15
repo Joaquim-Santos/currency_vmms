@@ -17,6 +17,7 @@ Deve-se ter um serviço de banco de dados MySQL ativo, o que pode ser feito util
 Deve ser criado o esquema **currency_vmms** no banco. Com base na criação do container acima, basta executar os comandos a seguir para entrar no mesmo e criar o esquema:
 
 **docker exec -it mysqlbd1 bash**
+
 **mysql -u root -pmy_password**
 
 Então, é preciso executar o script **manager.py** para realizar a migração e adicionar os modelos do projeto como tabelas no banco. Para tanto, esse script deve ser executado com os parâmetros, em orddem:
