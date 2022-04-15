@@ -14,7 +14,12 @@ Deve-se ter um serviço de banco de dados MySQL ativo, o que pode ser feito util
 
 **docker run --name mysqlbd1 -e MYSQL_ROOT_PASSWORD=my_password -p "3307:3306" -d mysql**
 
-Deve ser criado o esquema **currency_vmms** no banco. Então, é preciso executar o script **manager.py** para realizar a migração e adicionar os modelos do projeto como tabelas no banco. Para tanto, esse script deve ser executado com os parâmetros, em orddem:
+Deve ser criado o esquema **currency_vmms** no banco. Com base na criação do container acima, basta executar os comandos a seguir para entrar no mesmo e criar o esquema:
+
+**docker exec -it mysqlbd1 bash**
+**mysql -u root -pmy_password**
+
+Então, é preciso executar o script **manager.py** para realizar a migração e adicionar os modelos do projeto como tabelas no banco. Para tanto, esse script deve ser executado com os parâmetros, em orddem:
 
 1. db init
 2. db migrate
