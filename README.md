@@ -8,7 +8,8 @@ Para execução do projeto, deve-se instalar as dependências listadas em requir
 1. **DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_SCHEMA** - Conexão com o banco de dados, sendo respectivamente: usuário, senha, endereço IP do host, porta do host, esquema usado para o projeto.
 2. **STAGE** - Definição do ambiente de execução entre Local, Teste, Desenvolvimento ou Produção, respectivamente associados aos valores: Local, Test, Development, Production.
 3. **MAIL_USER, MAIL_PASSWORD, NOTIFICATION_EMAIL** - Dados para envio de e-mail de alerta, via SMTP, sendo respectivamente: e-mail de login e sua senha para o servidor SMTP utilziado, e o e-mail para o qual a notificação será enviada.
-4. **LOGS_FOLDER** - Caminho para o diretório onde serão gerados os arquivos de Log. 
+4. **LOGS_FOLDER** - Caminho para o diretório onde serão gerados os arquivos de Log.
+5. **HOST, PORT** - Endereço do Host e sua porta para executar a aplicação (Padrão localhost:5000).
 
 Deve-se ter um serviço de banco de dados MySQL ativo, o que pode ser feito utilizando o container:
 
