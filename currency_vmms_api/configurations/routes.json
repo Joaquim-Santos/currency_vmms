@@ -1,0 +1,24 @@
+{
+  "blueprint": [
+    {
+      "name": "api",
+      "url_prefix": "/api",
+      "resources": [
+        {
+          "name": "health",
+          "flask": {
+            "resourceModule": "currency_vmms_api.resources",
+            "resourceClass": "HealthResource",
+            "strictSlashes": false
+          },
+          "methods": [
+            {
+              "path": "/health",
+              "queryParams": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
