@@ -23,7 +23,7 @@ Deve ser criado o esquema **currency_vmms** no banco. Com base na criação do c
 
 **CREATE SCHEMA currency_vmms;**
 
-Então, é preciso executar o script **manager.py** para realizar a migração e adicionar os modelos do projeto como tabelas no banco. Para tanto, esse script deve ser executado com os parâmetros, em orddem:
+Então, é preciso executar o script **manager.py** para realizar a migração e adicionar os modelos do projeto como tabelas no banco. Para tanto, esse script deve ser executado com os parâmetros, em ordem:
 
 1. db init
 2. db migrate
