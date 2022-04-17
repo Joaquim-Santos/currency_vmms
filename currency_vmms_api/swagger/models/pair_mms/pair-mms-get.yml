@@ -1,0 +1,47 @@
+tags:
+  - pair_mms
+
+summary: Retorna a lista de variações de médias móveis simples, de 20, 50 ou 200 dias, das moedas Bitcoin e Etherium,
+         para um período de tempo informado. O parâmetro pair deve ser BRLBTC ou BRLBTC, já as datas de início e fim
+         (from, to) devem estar no formato timestamp (número inteiro), sendo que a data de fim possui o default do
+         dia anterior. Quanto ao parâmetro range, deve ser 20, 50, ou 200.
+
+parameters:
+  - in: path
+    name: pair
+    schema:
+      type: string
+      example: BRLBTC
+    required: true
+
+  - in: query
+    name: from
+    schema:
+      type: integer
+      example: 1649980800
+    required: true
+
+  - in: query
+    name: to
+    schema:
+      type: integer
+      example: 1650164400
+    required: false
+
+  - in: query
+    name: range
+    schema:
+      type: integer
+      example: 20
+    required: true
+
+
+responses:
+  200:
+    description: OK
+  400:
+    description: BAD REQUEST
+  404:
+    description: NOT FOUND
+  500:
+    description: INTERNAL SERVER ERROR

@@ -4,7 +4,6 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from currency_vmms_api import application, db
-from currency_vmms_api.configurations.config import get_config
 from currency_vmms_api.models import *
 
 
@@ -15,7 +14,7 @@ application.config.from_object('currency_vmms_api.configurations.config.' + os.e
 migrate = Migrate(application, db)
 manager = Manager(application)
 
-if get_config() in ['LocalConfig', 'TestConfig']:
+if os.environ['STAGE'].capitalize() in ['Local', 'Test']:
     manager.add_command('db', MigrateCommand)
 
 
@@ -43,7 +42,5 @@ def routes():
         print(route)
 
 
-
 if __name__ == '__main__':
-    # manager.run()
-    generate_sql_script("V1.0.0__FULL-DATABASE.sql")
+    manager.run()

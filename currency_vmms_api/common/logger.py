@@ -10,7 +10,7 @@ class Logger:
         self.log = self.__get_logger(config=config, name=name, file_name=file_name)
 
     @staticmethod
-    def __get_logger(config, name, file_name, level=logging.WARNING):
+    def __get_logger(config, name, file_name, level=logging.INFO):
         logger = logging.getLogger(name=name)
 
         if len(logger.handlers) > 1:

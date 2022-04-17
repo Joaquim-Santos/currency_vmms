@@ -1,5 +1,3 @@
-import os
-
 from currency_vmms_api.configurations.routes_builder import RoutesBuilder
 from currency_vmms_api.common import exceptions
 from currency_vmms_api.configurations.config import get_config
@@ -12,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from marshmallow.exceptions import ValidationError
 from flasgger import Swagger
+from flask import request
 
 
 application = Flask(__name__)
@@ -27,7 +26,10 @@ db.init_app(application)
 builder = RoutesBuilder()
 builder.add_resources(application=application, router_file_path='currency_vmms_api/configurations/routes.json')
 
-logger = Logger(get_config(), "catar_api", 'catar.log')
+# Configuração das opções de CORS para cada rota.
+builder.add_cors(application=application, router_file_path='currency_vmms_api/configurations/routes.json')
+
+logger = Logger(get_config(), "currency_vmms_api", 'currency_vmms_api.log')
 
 
 def handle_exception(error):
@@ -46,7 +48,7 @@ def handle_exception(error):
     """
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
-    logger.log.exception(error.message, exc_info=error)
+    logger.log.exception(f'endpoint: {request.method} {request.url}\n{error.message}', exc_info=error)
     return response
 
 
@@ -64,7 +66,7 @@ def handle_integrity_error(error):
         response: JSON
             Objeto JSON com dados da exceção.
     """
-    logger.log.exception(error.orig, exc_info=error)
+    logger.log.exception(f'endpoint: {request.method} {request.url}\n{error.orig}', exc_info=error)
     return jsonify({'error_message': 'IntegrityError: ' + str(error.orig)}), 422
 
 
@@ -82,7 +84,7 @@ def handle_generic_error(error):
         response: JSON
             Objeto JSON com dados da exceção.
     """
-    logger.log.exception(str(error), exc_info=error)
+    logger.log.exception(f'endpoint: {request.method} {request.url}\n{error}', exc_info=error)
     return jsonify({'error_message': 'generic_error: ' + str(error)}), 500
 
 
@@ -99,6 +101,14 @@ application.register_error_handler(exceptions.MethodNotAllowed, handle_exception
 application.register_error_handler(ValidationError, handle_exception)
 application.register_error_handler(Exception, handle_generic_error)
 application.register_error_handler(IntegrityError, handle_integrity_error)
+
+
+@application.before_request
+def log_request_info():
+    logger.log.info(f'Acesso ao endpoint: {request.method} {request.url}\n'
+                    f'Headers:\n{request.headers}'
+                    f'Args: {dict(request.args)}\n'
+                    f'Data: {request.get_data()}\n')
 
 
 @application.after_request

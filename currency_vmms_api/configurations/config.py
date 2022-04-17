@@ -16,7 +16,7 @@ class BaseConfig:
     DB_USER = os.environ.get("DB_USER")
     DB_PASSWORD = os.environ.get("DB_PASSWORD")
 
-    SQLALCHEMY_DATABASE_URI = f'mysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_SCHEMA}'
+    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_SCHEMA}'
 
     MAIL_USER = os.environ.get("MAIL_USER")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")

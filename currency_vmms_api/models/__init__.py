@@ -1,0 +1,1 @@
+from currency_vmms_api.models.pair_mms_daily import PairMMSDailyModel

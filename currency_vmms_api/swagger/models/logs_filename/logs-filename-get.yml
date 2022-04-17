@@ -1,0 +1,20 @@
+tags:
+  - logs_filename
+
+summary: Retorna um arquivo de logs da aplicação, correspondente a um dia.
+
+parameters:
+  - in: path
+    name: filename
+    schema:
+      type: string
+      example: currency_vmms_api.log
+    required: true
+
+responses:
+  200:
+    description: OK
+  404:
+    description: NOT FOUND
+  500:
+    description: INTERNAL SERVER ERROR

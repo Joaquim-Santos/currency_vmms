@@ -1,24 +1,84 @@
 {
-  "blueprint": [
-    {
-      "name": "api",
-      "url_prefix": "/api",
-      "resources": [
-        {
-          "name": "health",
-          "flask": {
-            "resourceModule": "currency_vmms_api.resources",
-            "resourceClass": "HealthResource",
-            "strictSlashes": false
-          },
-          "methods": [
-            {
-              "path": "/health",
-              "queryParams": []
+  "blueprint": {
+    "name": "api",
+    "url_prefix": "/api",
+    "resources": [
+      {
+        "name": "health",
+        "flask": {
+          "resourceModule": "currency_vmms_api.resources",
+          "resourceClass": "HealthResource",
+          "strictSlashes": false
+        },
+        "methods": [
+          {
+            "path": "/health",
+            "cors": {
+              "enable": true,
+              "allowHeaders": ["*"],
+              "origins": "*",
+              "methods": ["GET"]
             }
-          ]
-        }
-      ]
-    }
-  ]
+          }
+        ]
+      },
+       {
+        "name": "pair_mms",
+        "flask": {
+          "resourceModule": "currency_vmms_api.resources",
+          "resourceClass": "PairMMSResource",
+          "strictSlashes": false
+        },
+        "methods": [
+          {
+            "path": "/<pair>/mms",
+            "cors": {
+              "enable": true,
+              "allowHeaders": ["*"],
+              "origins": "*",
+              "methods": ["GET"]
+            }
+          }
+        ]
+      },
+      {
+        "name": "logs",
+        "flask": {
+          "resourceModule": "currency_vmms_api.resources",
+          "resourceClass": "LogsResource",
+          "strictSlashes": false
+        },
+        "methods": [
+          {
+            "path": "/logs",
+            "cors": {
+              "enable": true,
+              "allowHeaders": ["*"],
+              "origins": "*",
+              "methods": ["GET"]
+            }
+          }
+        ]
+      },
+       {
+        "name": "logs_filename",
+        "flask": {
+          "resourceModule": "currency_vmms_api.resources",
+          "resourceClass": "LogsFileNameResource",
+          "strictSlashes": false
+        },
+        "methods": [
+          {
+            "path": "/logs/<filename>",
+            "cors": {
+              "enable": true,
+              "allowHeaders": ["*"],
+              "origins": "*",
+              "methods": ["GET"]
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

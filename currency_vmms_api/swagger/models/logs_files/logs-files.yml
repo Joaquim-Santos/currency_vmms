@@ -1,0 +1,10 @@
+tags:
+  - logs_files
+
+summary: Retorna a lista de arquivos de logs da aplicação, correspondentes a cada dia.
+
+responses:
+  200:
+    description: OK
+  500:
+    description: INTERNAL SERVER ERROR

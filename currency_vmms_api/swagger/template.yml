@@ -1,0 +1,23 @@
+info:
+  title: currency-vmms-api
+  description: API para fornecer variações de médias móveis simples das moedas Bitcoin e Etherium, através de um
+               serviço de backend python.
+  version: 1
+
+servers:
+  - url: localhost:5000
+    description: Servidor de desenvolvimento local
+#  - url: https://currency-vmms-api-dev.com # desenvolvimento e produção apenas simbólicos no momento.
+#    description: Servidor de desenvolvimento da aplicação (Development)
+#  - url: https://currency-vmms-api.com
+#    description: Servidor de produção do Catar (Production)
+
+tags:
+  - name: health
+    description: Verifica se o sistema está ativo.
+  - name: pair_mms
+    description: Disponibiliza a variação da MMS dado um período de início e fim.
+  - name: logs_files
+    description: Retorna a lista de arquivos de logs da aplicação.
+  - name: logs_filename
+    description: Retorna um arquivo de log da aplicação.

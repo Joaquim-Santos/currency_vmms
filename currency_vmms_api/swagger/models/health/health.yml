@@ -1,0 +1,10 @@
+tags:
+  - health
+
+summary: Exibe a data atual, mostrando que o sistema está funcionando.
+
+responses:
+  200:
+    description: OK
+  500:
+    description: INTERNAL SERVER ERROR

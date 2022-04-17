@@ -1,0 +1,3 @@
+from currency_vmms_api.resources.health import HealthResource
+from currency_vmms_api.resources.pair_mms import PairMMSResource
+from currency_vmms_api.resources.logs import LogsResource, LogsFileNameResource
