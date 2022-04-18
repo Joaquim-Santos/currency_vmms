@@ -3,9 +3,9 @@ import os
 
 from currency_vmms_api import application, db
 from currency_vmms_api.models import *
+from currency_vmms_api.common.utils import Utils
 
 from shutil import rmtree
-from datetime import datetime, timedelta
 
 
 @pytest.fixture(scope="session")
@@ -32,7 +32,7 @@ def create_required_tables_for_analysis():
     # Criar dados de MMS para cada moeda.
     pair_mms_daily_1 = {
       "pair": "BRLETH",
-      "timestamp": (datetime.now() - timedelta(days=2)),
+      "timestamp": Utils.get_datetime_from_some_day_before_now(2),
       "mms_20": 10.0,
       "mms_50": 11.0,
       "mms_200": 12.0
@@ -40,7 +40,7 @@ def create_required_tables_for_analysis():
 
     pair_mms_daily_2 = {
       "pair": "BRLETH",
-      "timestamp": (datetime.now() - timedelta(days=1)),
+      "timestamp": Utils.get_datetime_from_some_day_before_now(1),
       "mms_20": 10.1,
       "mms_50": 11.1,
       "mms_200": 12.1
@@ -48,7 +48,7 @@ def create_required_tables_for_analysis():
 
     pair_mms_daily_3 = {
       "pair": "BRLETH",
-      "timestamp": (datetime.now() - timedelta(days=0)),
+      "timestamp": Utils.get_datetime_from_some_day_before_now(0),
       "mms_20": 10.2,
       "mms_50": 11.2,
       "mms_200": 12.2
@@ -56,7 +56,7 @@ def create_required_tables_for_analysis():
 
     pair_mms_daily_4 = {
         "pair": "BRLBTC",
-        "timestamp": (datetime.now() - timedelta(days=2)),
+        "timestamp": Utils.get_datetime_from_some_day_before_now(2),
         "mms_20": 20.0,
         "mms_50": 21.0,
         "mms_200": 22.0
@@ -64,7 +64,7 @@ def create_required_tables_for_analysis():
 
     pair_mms_daily_5 = {
         "pair": "BRLBTC",
-        "timestamp": (datetime.now() - timedelta(days=1)),
+        "timestamp": Utils.get_datetime_from_some_day_before_now(1),
         "mms_20": 20.1,
         "mms_50": 21.1,
         "mms_200": 22.1
@@ -72,7 +72,7 @@ def create_required_tables_for_analysis():
 
     pair_mms_daily_6 = {
         "pair": "BRLBTC",
-        "timestamp": (datetime.now() - timedelta(days=0)),
+        "timestamp": Utils.get_datetime_from_some_day_before_now(0),
         "mms_20": 20.2,
         "mms_50": 21.2,
         "mms_200": 22.2

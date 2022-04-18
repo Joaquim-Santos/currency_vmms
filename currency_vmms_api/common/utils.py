@@ -22,7 +22,7 @@ class Utils:
                 Timestamp do dia obtido.
         """
         target_day = (datetime.today() - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
-        return datetime.timestamp(target_day)
+        return int(datetime.timestamp(target_day))
 
     @staticmethod
     def convert_timestamp_number_to_datetime(timestamp: int):
@@ -41,3 +41,20 @@ class Utils:
                 Objeto datetime correspondente ao timestamp informado.
         """
         return datetime.fromtimestamp(timestamp).replace(hour=0, minute=0, second=0, microsecond=0)
+
+    @staticmethod
+    def get_datetime_from_some_day_before_now(days: int):
+        """
+            Método para obter a data de um determinado dia anterior ao dia atual.
+
+            Parameters
+            ----------
+            days: int
+                Quantidade de dias para subtrair da data atual.
+
+            Returns
+            ----------
+            datetime
+                Data do dia obtido.
+        """
+        return (datetime.today() - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
