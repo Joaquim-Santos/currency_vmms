@@ -3,6 +3,8 @@ API para fornecer variações de médias móveis simples das moedas Bitcoin e Et
 
 O projeto foi implementado utilizando um servidor Flask, o qual disponibiliza o endpoint para retorno da variação da MMS para cada moeda no período desejado, sendo considerada a MMS para 20, 50 e 200 dias, com base nos últimos 365 dias. Para cálculo das médias, são utilizados os valores de fechamento de cada moeda, obtidos através da API de candles do Mercado Bitcoin.
 
+## Execução
+
 Para execução do projeto, deve-se instalar as dependências listadas em requirements.txt, em ambiente Python (recomendado python 3.7 com ambiente virtual). Ademais, devem ser definidas as variáveis de ambiente:
 
 1. **DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_SCHEMA** - Conexão com o banco de dados, sendo respectivamente: usuário, senha, endereço IP do host, porta do host, esquema usado para o projeto.
@@ -41,7 +43,7 @@ O projeto possui uma funcionalidade de **Scheduler**, a qual irá executar Jobs 
 
 * O Scheduler também irá realizar o carregamento inicial da tabela, calculando as MMS de 20, 50 e 200 dias, dos últimos 365 dias, de cada moeda. Isso será identificado e executado quando a tabela correspondente no banco estiver vazia.
 
-2. **MissingDaysMonitoringScheduler**: Executado diariamente, com o objetivo de verificar se há algum registro de MMS faltante no banco, para os últimos 365 dias. Caso haja, então será enviado um e-mail de alerta informando os dias faltantes, o que será feito através do módulo para envios de e-mail via SMTP. 
+2. **MissingDaysMonitoringScheduler**: Executado a cada hora, com o objetivo de verificar se há algum registro de MMS faltante no banco, para os últimos 365 dias. Caso haja, então será enviado um e-mail de alerta informando os dias faltantes, o que será feito através do módulo para envios de e-mail via SMTP. 
  
 * O serviço SMTP foi configurado no script **mail**, com base em um servidor Gmail. Para que o mesmo funcione, as variáveis de ambiente **MAIL_USER** e **MAIL_PASSWORD** devem ser preenchidas com o login de uma conta Gmail, com a opção de **Acesso a apps menos seguras** habilitada (ou Navegação segura desabilitada). Além disso, deve ser fornecido o e-mail de destino das notificações, para a variável **NOTIFICATION_EMAIL**.
 
@@ -52,4 +54,6 @@ Foram implementados testes unitários para os principais métodos, contidos no d
 1. STAGE: Test
 2. LOGS_FOLDER: Caminho para o diretório raíz do projeto.
 3. As variáveis referente ao serviço de e-mail não são utilzadas no teste, então não precisam ser definidas nesse ambiente. Já para conexão de banco, é definida, na classe de teste, uma conexão com uma base SQLite simples que será gerada para os testes, não havendo necessidade das variáveis de ambiente.
+
+
 
