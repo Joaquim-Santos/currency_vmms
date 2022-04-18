@@ -72,7 +72,7 @@ A arquitetura da aplicação seguiu uma divisão em camadas, segundo padrão do 
 5. **models**: Mapeamento das tabelas do banco, usadas para migração e operações com SQLAlchemy.
 6. **common**: Classes Abstratas, classes para exceções e outros métodos reutilizáveis.
 7. **swagger**: Documentação da aplicação,, interativa pela interface Swagger.
-8. 7. **schemas**: Classes para validação de dados de entrada, com base na lib marshmallow.
+8. **schemas**: Classes para validação de dados de entrada, com base na lib marshmallow.
 
 * Foram criados handlers personalizados para tratar as exceções conhecidas da API.
 * Os dados enviados na requisição à um endpoint são validados, a fim de identificar e informar problemas como dados em formato inválido (e.g. data final maior do que a inicial, datas em formato fora do esperado, etc) e consultas com data de início anterior a 365 dias.
