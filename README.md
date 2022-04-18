@@ -35,6 +35,8 @@ Feito isto, basta executar o script **application.py** para iniciar o servidor. 
 
 A aplicação também pode ser iniciada em container, utilizando Dockerfile do projeto. Basta construí-lo informando as mesmas variáveis de ambiente citadas anteriormente, já tendo as dependências de banco descritas configuradas e ativas.
 
+## Jobs Assíncronos
+
 O projeto possui uma funcionalidade de **Scheduler**, a qual irá executar Jobs periódicos para atualização da base de dados, bem como para verificação e tratamento de falhas. Há dois schedulers implementados, de modo que ambos se iniciam ao iniciar a aplicação:
 
 1. **CurrenciesMMSScheduler**: Executado diariamente, com o objetivo de incrementar os registros do banco correspondentes às médias móveis simples para Bitcoin e Etherium. Este módulo obtém o valor de fechamento de cada moeda, a cada dia, por meio da API de candles, e então cálcula as médias móveis simples de 20, 50 e 200 dias, para os dias correspondentes, persistindo o resultado em banco. Dessa forma, a cada dia em que executar, atualizará a base com o cálculo de médias para aquele dia. 
@@ -47,13 +49,30 @@ O projeto possui uma funcionalidade de **Scheduler**, a qual irá executar Jobs 
  
 * O serviço SMTP foi configurado no script **mail**, com base em um servidor Gmail. Para que o mesmo funcione, as variáveis de ambiente **MAIL_USER** e **MAIL_PASSWORD** devem ser preenchidas com o login de uma conta Gmail, com a opção de **Acesso a apps menos seguras** habilitada (ou Navegação segura desabilitada). Além disso, deve ser fornecido o e-mail de destino das notificações, para a variável **NOTIFICATION_EMAIL**.
 
+## Logs
+
 Foi implementado um módulo para geração de **Logs**, o qual é usado tanto para os Schedulers quanto para a aplicação de modo que São gerados arquivos de Log separados para cada um. No caso dos Schedulers, são gravados possíveis erros na execução diária dos mesmos, além de informações da execução com sucesso. De forma semelhante, para a aplicação são gravados os erros que podem ocorrer no acesso a endpoints, assim como dados de requisições para os mesmos.
 
-Foram implementados testes unitários para os principais métodos, contidos no diretório de **tests**, os quais foram separados por móodulos e arquivos. Para execução dos mesmos, basta usar o comando **pytest** nesse diretório, já tendo as variáveis de ambiente definidas:
+## Testes
+
+Foram implementados testes unitários para os principais métodos, contidos no diretório de **tests**, os quais foram separados por móodulos e arquivos, buscando ter a cobertura da maior parte do código. Para execução dos mesmos, basta usar o comando **pytest** nesse diretório, já tendo as variáveis de ambiente definidas:
 
 1. STAGE: Test
 2. LOGS_FOLDER: Caminho para o diretório raíz do projeto.
 3. As variáveis referente ao serviço de e-mail não são utilzadas no teste, então não precisam ser definidas nesse ambiente. Já para conexão de banco, é definida, na classe de teste, uma conexão com uma base SQLite simples que será gerada para os testes, não havendo necessidade das variáveis de ambiente.
 
+## Organização
 
+A arquitetura da aplicação seguiu uma divisão em camadas, segundo padrão do Flask:
 
+1. **resources**: Classes representando os Endpoints e seus métodos.
+2. **services**: Fornece os serviços que solicitam acesso à banco e realizam processamentos para retorno do resultado.
+3. **repositories**: Define as operações sobre a base de dados.
+4. **configurations**: Define a configuração da aplicação, como rotas e ambiente.
+5. **models**: Mapeamento das tabelas do banco, usadas para migração e operações com SQLAlchemy.
+6. **common**: Classes Abstratas, classes para exceções e outros métodos reutilizáveis.
+7. **swagger**: Documentação da aplicação,, interativa pela interface Swagger.
+8. 7. **schemas**: Classes para validação de dados de entrada, com base na lib marshmallow.
+
+* Foram criados handlers personalizados para tratar as exceções conhecidas da API.
+* Os dados enviados na requisição à um endpoint são validados, a fim de identificar e informar problemas como dados em formato inválido (e.g. data final maior do que a inicial, datas em formato fora do esperado, etc) e consultas com data de início anterior a 365 dias.
