@@ -12,7 +12,7 @@ class TestPairMMSService:
             "range": 200
         }
         expected_data = [
-            {'timestamp': 1649991600.0, 'mms': 12.0}
+            {'timestamp': Utils.get_timestamp_number_from_some_day_before_now(2), 'mms': 12.0}
         ]
 
         assert PairMMSService().get_mms_variations_by_time_course(data) == expected_data

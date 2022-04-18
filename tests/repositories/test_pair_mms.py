@@ -12,8 +12,8 @@ class TestPairMMSRepository:
             "range": 50
         }
         expected_data = [
-            {'timestamp': 1649991600.0, 'mms': 21.0},
-            {'timestamp': 1650078000.0, 'mms': 21.1}
+            {'timestamp': Utils.get_timestamp_number_from_some_day_before_now(2), 'mms': 21.0},
+            {'timestamp': Utils.get_timestamp_number_from_some_day_before_now(1), 'mms': 21.1}
         ]
 
         assert PairMMSRepository().get_mms_variations_by_time_course(data) == expected_data

@@ -27,9 +27,9 @@ class TestPairMMSResource:
 
     def test_get_with_success(self, client):
         expected_data = [
-            {'timestamp': 1649991600.0, 'mms': 20.0},
-            {'timestamp': 1650078000.0, 'mms': 20.1},
-            {'timestamp': 1650164400.0, 'mms': 20.2}
+            {'timestamp': Utils.get_timestamp_number_from_some_day_before_now(2), 'mms': 20.0},
+            {'timestamp': Utils.get_timestamp_number_from_some_day_before_now(1), 'mms': 20.1},
+            {'timestamp': Utils.get_timestamp_number_from_some_day_before_now(0), 'mms': 20.2}
         ]
         data = {
             "from": Utils.get_timestamp_number_from_some_day_before_now(2),
