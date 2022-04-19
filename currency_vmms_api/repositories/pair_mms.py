@@ -3,6 +3,7 @@ from currency_vmms_api.models import PairMMSDailyModel
 from currency_vmms_api import db
 from datetime import datetime
 from sqlalchemy import func
+from currency_vmms_api.common.utils import Utils
 
 
 class PairMMSRepository(AbstractRepository):
@@ -47,5 +48,19 @@ class PairMMSRepository(AbstractRepository):
         for item in query_result:
             item = dict(item)
             result[item['pair']] = item['last_day']
+
+        return result
+
+    def get_count_days_by_pair(self):
+        query_result = db.session.query(PairMMSDailyModel.pair,
+                                        func.count(PairMMSDailyModel.timestamp).label('count_days'))\
+            .group_by(PairMMSDailyModel.pair)\
+            .filter(PairMMSDailyModel.timestamp >= Utils.get_datetime_from_some_day_before_now(365))\
+            .all()
+
+        result = {}
+        for item in query_result:
+            item = dict(item)
+            result[item['pair']] = item['count_days']
 
         return result

@@ -34,3 +34,11 @@ class TestPairMMSService:
         }
 
         assert PairMMSService().get_last_day_of_mms_for_pair() == expected_data
+
+    def test_get_count_days_by_pair_with_success(self):
+        expected_data = {
+            'BRLBTC': 3,
+            'BRLETH': 3
+        }
+
+        assert PairMMSService().get_count_days_by_pair() == expected_data

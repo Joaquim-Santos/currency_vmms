@@ -5,6 +5,7 @@ from currency_vmms_api.common import exceptions
 from currency_vmms_api.configurations.config import get_config
 from currency_vmms_api.common.logger import Logger
 from scheduler.currencies_mms_scheduler import CurrenciesMMSScheduler
+from scheduler.missing_days_monitoring_scheduler import MissingDaysMonitoringScheduler
 
 from flask import Flask
 from flask import jsonify
@@ -106,8 +107,9 @@ application.register_error_handler(Exception, handle_generic_error)
 application.register_error_handler(IntegrityError, handle_integrity_error)
 
 if os.environ['STAGE'].capitalize() not in ['Test']:
-    # Scheduler será iniciado com a aplicação, para executar em background.
+    # Cada Scheduler será iniciado com a aplicação, para executar em background.
     CurrenciesMMSScheduler().schedule(run_now=True)
+    MissingDaysMonitoringScheduler().schedule(run_now=True)
 
 
 @application.before_request

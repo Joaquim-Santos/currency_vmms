@@ -10,3 +10,6 @@ class PairMMSService(AbstractService):
 
     def get_last_day_of_mms_for_pair(self):
         return self.get_repository().get_last_day_of_mms_for_pair()
+
+    def get_count_days_by_pair(self):
+        return self.get_repository().get_count_days_by_pair()
