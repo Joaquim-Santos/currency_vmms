@@ -1,5 +1,6 @@
 from currency_vmms_api.services.pair_mms import PairMMSService
 from scheduler.abstract_scheduler import AbstractScheduler
+from currency_vmms_api.common.mail import Email
 
 
 class MissingDaysMonitoringScheduler(AbstractScheduler):
@@ -21,6 +22,7 @@ class MissingDaysMonitoringScheduler(AbstractScheduler):
             self._logger_info.log.info("Não há registros faltantes para os últimos 365 dias.")
         else:
             self._logger_info.log.exception("Há registros faltantes para os últimos 365 dias.")
+            Email().send_mail()
 
         return True, None
 
