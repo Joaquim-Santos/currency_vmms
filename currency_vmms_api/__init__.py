@@ -1,7 +1,10 @@
+import os
+
 from currency_vmms_api.configurations.routes_builder import RoutesBuilder
 from currency_vmms_api.common import exceptions
 from currency_vmms_api.configurations.config import get_config
 from currency_vmms_api.common.logger import Logger
+from scheduler.currencies_mms_scheduler import CurrenciesMMSScheduler
 
 from flask import Flask
 from flask import jsonify
@@ -101,6 +104,10 @@ application.register_error_handler(exceptions.MethodNotAllowed, handle_exception
 application.register_error_handler(ValidationError, handle_exception)
 application.register_error_handler(Exception, handle_generic_error)
 application.register_error_handler(IntegrityError, handle_integrity_error)
+
+if os.environ['STAGE'].capitalize() not in ['Test']:
+    # Scheduler será iniciado com a aplicação, para executar em background.
+    CurrenciesMMSScheduler().schedule(run_now=True)
 
 
 @application.before_request

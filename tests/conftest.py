@@ -23,7 +23,7 @@ def create_db():
     db.session.commit()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def create_required_tables_for_analysis():
     db.session.query(PairMMSDailyModel).delete()
 

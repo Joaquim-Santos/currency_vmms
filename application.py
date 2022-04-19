@@ -6,4 +6,4 @@ if __name__ == "__main__":
     host = os.getenv("HOST", 'localhost')
     port = os.getenv("PORT", 5000)
 
-    application.run(host=host, port=port, debug=debug)
+    application.run(host=host, port=port, debug=debug, use_reloader=False)

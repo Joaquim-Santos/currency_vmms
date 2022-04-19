@@ -4,7 +4,7 @@ from currency_vmms_api.common.utils import Utils
 
 class TestPairMMSService:
 
-    def test_get_mms_variations_by_time_course_with_data(self, client):
+    def test_get_mms_variations_by_time_course_with_data(self):
         data = {
             "pair": "BRLETH",
             "start_date": Utils.get_datetime_from_some_day_before_now(2),
@@ -17,7 +17,7 @@ class TestPairMMSService:
 
         assert PairMMSService().get_mms_variations_by_time_course(data) == expected_data
 
-    def test_get_mms_variations_by_time_course_without_data(self, client):
+    def test_get_mms_variations_by_time_course_without_data(self):
         data = {
             "pair": "BRLETH",
             "start_date": Utils.get_datetime_from_some_day_before_now(4),
@@ -26,3 +26,11 @@ class TestPairMMSService:
         }
 
         assert PairMMSService().get_mms_variations_by_time_course(data) == []
+
+    def test_get_last_day_of_mms_for_pair_with_success(self):
+        expected_data = {
+            'BRLBTC': Utils.get_datetime_from_some_day_before_now(0),
+            'BRLETH': Utils.get_datetime_from_some_day_before_now(0)
+        }
+
+        assert PairMMSService().get_last_day_of_mms_for_pair() == expected_data

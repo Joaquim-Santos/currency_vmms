@@ -1,6 +1,8 @@
 from currency_vmms_api.common.abstract_repository import AbstractRepository
 from currency_vmms_api.models import PairMMSDailyModel
+from currency_vmms_api import db
 from datetime import datetime
+from sqlalchemy import func
 
 
 class PairMMSRepository(AbstractRepository):
@@ -27,10 +29,23 @@ class PairMMSRepository(AbstractRepository):
             selected_mms = possible_mms[pair_mms_filters['range']]
 
             selected_item = {
-                "timestamp": datetime.timestamp(item["timestamp"]),
+                "timestamp": int(datetime.timestamp(item["timestamp"])),
                 "mms": item[selected_mms]
             }
 
             result.append(selected_item)
+
+        return result
+
+    def get_last_day_of_mms_for_pair(self):
+        query_result = db.session.query(PairMMSDailyModel.pair,
+                                        func.max(PairMMSDailyModel.timestamp).label('last_day'))\
+            .group_by(PairMMSDailyModel.pair)\
+            .all()
+
+        result = {}
+        for item in query_result:
+            item = dict(item)
+            result[item['pair']] = item['last_day']
 
         return result

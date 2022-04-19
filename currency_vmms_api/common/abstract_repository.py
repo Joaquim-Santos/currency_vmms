@@ -125,6 +125,7 @@ class AbstractRepository(ABC):
             for attribute in new_model.__table__.columns:
                 if re.search(pattern, str(attribute)):
                     setattr(new_model, key, value)
+                    break
 
         try:
             db.session.add(new_model)

@@ -25,7 +25,7 @@ class TestLogsResource:
 
     def test_get_with_success(self, client):
         ecpected_data = {
-            'log_files': ['currency_vmms_api.log']
+            'log_files': ['currencies_mms_scheduler.log', 'currency_vmms_api.log']
         }
 
         response = client.get("/api/logs")

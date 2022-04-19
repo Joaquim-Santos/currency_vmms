@@ -7,3 +7,6 @@ class PairMMSService(AbstractService):
 
     def get_mms_variations_by_time_course(self, pair_mms_filters: dict):
         return self.get_repository().get_mms_variations_by_time_course(pair_mms_filters)
+
+    def get_last_day_of_mms_for_pair(self):
+        return self.get_repository().get_last_day_of_mms_for_pair()
