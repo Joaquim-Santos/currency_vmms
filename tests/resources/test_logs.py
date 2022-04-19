@@ -1,7 +1,7 @@
 import json
 
 from http import HTTPStatus
-
+from scheduler.currencies_mms_scheduler import CurrenciesMMSScheduler
 
 class TestLogsResource:
 
@@ -24,13 +24,14 @@ class TestLogsResource:
         ]
 
     def test_get_with_success(self, client):
-        ecpected_data = {
+        CurrenciesMMSScheduler()
+        expected_data = {
             'log_files': ['currencies_mms_scheduler.log', 'currency_vmms_api.log']
         }
 
         response = client.get("/api/logs")
 
-        assert (json.loads(response.data, encoding='utf-8'), response.status_code) == (ecpected_data, HTTPStatus.OK)
+        assert (json.loads(response.data, encoding='utf-8'), response.status_code) == (expected_data, HTTPStatus.OK)
 
 
 class TestLogsFileNameResource:
