@@ -1,11 +1,5 @@
-import requests
-import statistics
-
 from currency_vmms_api.services.pair_mms import PairMMSService
-from currency_vmms_api.common.exceptions import GenericException, IntegrityException
 from scheduler.abstract_scheduler import AbstractScheduler
-from datetime import datetime, timedelta
-from statistics import StatisticsError
 
 
 class MissingDaysMonitoringScheduler(AbstractScheduler):
@@ -22,7 +16,7 @@ class MissingDaysMonitoringScheduler(AbstractScheduler):
             if count_days_by_pair.get(pair, 0) < 365:
                 has_missing = True
                 break
-        
+
         if not has_missing:
             self._logger_info.log.info("Não há registros faltantes para os últimos 365 dias.")
         else:
